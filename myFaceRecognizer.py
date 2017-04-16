@@ -4,12 +4,17 @@ import cv2
 import numpy as np
 from PIL import Image
 
+""" User input here """
 
-'''Where the pictures are stored'''
+resize = False # flag to standardize the image size
 train_directory = "train"
 test_directory = "test"
-
 cascadePath = "haarcascade_frontalface_default.xml" 
+if resize:
+	dsize = (500,500)
+
+"""Everything from here is autopilot."""
+
 faceCascade = cv2.CascadeClassifier(cascadePath);
 recognizer = cv2.createLBPHFaceRecognizer()
 
@@ -18,11 +23,12 @@ def get_images(directory):
 	images = []
 	labels = []
 	for image_path in image_paths:
-		try:
-			image_pil = Image.open(image_path).convert('L')
-		except:
+		if image_path == 'train/.DS_Store':
 			continue
+		image_pil = Image.open(image_path).convert('L')
 		image = np.array(image_pil, 'uint8')
+		if resize:
+			image = cv2.resize(image, dsize, interpolation = cv2.INTER_CUBIC)
 		if image_path[0:11] == 'train/image':
 			nbr = 1
 		else:
