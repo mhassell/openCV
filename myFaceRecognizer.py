@@ -31,7 +31,7 @@ def get_images(directory):
 		for (x, y, w, h) in faces:
 			images.append(image[y: y + h, x: x + w])
 			labels.append(nbr)
-			cv2.imshow("Adding faces to traning set...", image[y: y + h, x: x + w])
+			cv2.imshow("Adding faces to training set...", image[y: y + h, x: x + w])
 			cv2.waitKey(50)
 	return images, labels
 
@@ -46,15 +46,12 @@ for image_path in image_paths:
 		predict_image_pil = Image.open(image_path).convert('L')
 		predict_image = np.array(predict_image_pil, 'uint8')
 		faces = faceCascade.detectMultiScale(predict_image)
-		if image_path[0:10]=="test/image":			
+		if image_path[0:10]=="test/image":		
 			nbr_actual = 1
 		else:
 			nbr_actual = 0
-		print image_path
-		print nbr_actual
 		for (x, y, w, h) in faces:
 			nbr_predicted, conf = recognizer.predict(predict_image[y: y + h, x: x + w])
-			print nbr_predicted, conf
 			if nbr_actual == nbr_predicted:
 				print "{} is Correctly Recognized with confidence {}".format(nbr_actual, conf)
 			else:
