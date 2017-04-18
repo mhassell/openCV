@@ -7,9 +7,8 @@ import numpy as np
 from PIL import Image
 
 resize = False
-
 if resize:
-	dsize = (500,500)
+	dsize = (320,243)
 
 '''Where the pictures are stored'''
 directory = 'train'
@@ -22,15 +21,19 @@ recognizer = cv2.createLBPHFaceRecognizer()
 
 image_paths = [os.path.join(directory, f) for f in os.listdir(directory)]
 
+j = 0
 for image_path in image_paths:
+	print image_path
 	if image_path == 'train/.DS_Store':
 		continue
 	image_pil = Image.open(image_path).convert('L')
 	image = np.array(image_pil, 'uint8')
 	if resize:
-		print(image.shape)
-		image = cv2.resize(image, dsize, interpolation = cv2.INTER_CUBIC)
-		cv2.imshow("resized image", image)
+		cv2.imshow("loaded...",image)
+		cv2.waitKey(0)
+		imageResized = cv2.resize(image, dsize, interpolation = cv2.INTER_CUBIC)
+		cv2.imwrite('imageGray{}.png'.format(j),imageResized)
+		j+=1
 	faces = faceCascade.detectMultiScale(image, minNeighbors=3, scaleFactor = 1.2)
 	eyes = eyeCascade.detectMultiScale(image, minNeighbors=5, scaleFactor = 1.2)
 	for (x, y, w, h) in faces:
@@ -40,7 +43,7 @@ for image_path in image_paths:
 		cv2.imshow("Verifying face",  image) #image[y: y + h, x: x + w])
 		k = cv2.waitKey(0)
 		if k == 32: # space
-			continue
+				continue
 		elif k == 110: # n
 			os.remove(image_path)
 
