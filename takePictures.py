@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 # from here: https://codeplasma.com/2012/12/03/getting-webcam-images-with-python-and-opencv-2-for-real-this-time/
 
 import os
@@ -6,16 +8,17 @@ from  datetime import date, datetime
 import time
 import cv2
 
+file = '/Users/matthewhassell/Desktop'
 #file = date.today().isoformat()
-file = 'test'
-try:
-	os.mkdir(file)
-except:
-	pass
+#file = 'test'
+#try:
+#	os.mkdir(file)
+#except:
+#	pass
 
 camera_port = 0
 ramp_frames = 5
-num_pics = 10
+num_pics = 1
 
 camera = cv2.VideoCapture(camera_port)
 
