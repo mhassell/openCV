@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList$
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
     <string>python.pics.script</string>
     <key>ProgramArguments</key>
     <array>
-        <string>/usr/local/lib/python2.7/site-packages</string>
+<!--        <string>/usr/local/lib/python2.7/site-packages</string> -->
+	<string>/usr/bin/python/</string>
         <string>/Users/matthewhassell/GitHub/openCV/takePictures.py</string>
     </array>
     <key>StandardErrorPath</key>
     <string>/var/log/python_script.error</string>
+    <key>StandardOutPath</key>
+	<string>/var/log/python_script.out</string>
     <key>RunAtLoad</key>
-        <true/>
+	<true/>
     <key>KeepAlive</key>
     <false/>
-    <dict>
-        <key>PYTHONPATH</key>
-        <string>/usr/local/lib/python2.7/site-packages</string>
-    </dict>
+<!--    <key>PYTHONPATH</key>
+    <string>/usr/local/lib/python2.7/site-packages</string> -->
 </dict>
 </plist>
