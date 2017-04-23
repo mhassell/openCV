@@ -6,7 +6,7 @@ import cv2
 import numpy as np
 from PIL import Image
 
-resize = False
+resize = True
 if resize:
 	dsize = (320,243)
 
@@ -29,16 +29,14 @@ for image_path in image_paths:
 	image_pil = Image.open(image_path).convert('L')
 	image = np.array(image_pil, 'uint8')
 	if resize:
-		cv2.imshow("loaded...",image)
-		cv2.waitKey(0)
+		# cv2.imshow("loaded...",image)
+		# cv2.waitKey(0)
+		image = cv2.blur(image,(3,3))
 		imageResized = cv2.resize(image, dsize, interpolation = cv2.INTER_CUBIC)
 		cv2.imwrite('imageGray{}.png'.format(j),imageResized)
 		j+=1
 	faces = faceCascade.detectMultiScale(image, minNeighbors=3, scaleFactor = 1.2)
-	eyes = eyeCascade.detectMultiScale(image, minNeighbors=5, scaleFactor = 1.2)
 	for (x, y, w, h) in faces:
-		for (ex,ey,ew,eh) in eyes:
-			cv2.rectangle(image,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
 		cv2.rectangle(image,(x,y),(x+w,y+h),(255,0,0),2)
 		cv2.imshow("Verifying face",  image) #image[y: y + h, x: x + w])
 		k = cv2.waitKey(0)

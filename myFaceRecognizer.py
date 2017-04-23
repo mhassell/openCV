@@ -6,7 +6,7 @@ from PIL import Image
 
 """ User input here """
 
-resize = False # flag to standardize the image size
+resize = True # flag to standardize the image size
 train_directory = "train"
 test_directory = "test"
 cascadePath = "haarcascade_frontalface_default.xml" 
@@ -18,6 +18,7 @@ if resize:
 faceCascade = cv2.CascadeClassifier(cascadePath);
 recognizer = cv2.createLBPHFaceRecognizer()
 
+# training happens here
 def get_images(directory):
 	image_paths = [os.path.join(directory, f) for f in os.listdir(directory)]
 	images = []
@@ -29,6 +30,8 @@ def get_images(directory):
 		image = np.array(image_pil, 'uint8')
 		if resize:
 			image = cv2.resize(image, dsize, interpolation = cv2.INTER_CUBIC)
+			image = cv2.medianBlur(image,5)
+			#image = cv2.blur(image,(8,8))
 		if image_path[0:11] == 'train/image':
 			nbr = 1
 		else:
@@ -44,6 +47,8 @@ def get_images(directory):
 images, labels = get_images(train_directory)
 cv2.destroyAllWindows()
 recognizer.train(images, np.array(labels))
+
+# testing happens here
 
 image_paths = [os.path.join(test_directory, f) for f in os.listdir(test_directory)]
 
